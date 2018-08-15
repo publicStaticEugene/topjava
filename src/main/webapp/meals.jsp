@@ -18,9 +18,11 @@
 	<thead>Meals</thead>
 	<tbody>
 	<tr>
+		<th>id</th>
 		<th>description</th>
 		<th>dateTime</th>
 		<th>calories</th>
+		<th>actions</th>
 	</tr>
 	<c:forEach items="${requestScope.meals}" var="meal">
 		<c:choose>
@@ -31,9 +33,15 @@
 				<tr style="color: #068109">
 			</c:otherwise>
 		</c:choose>
-			<td>${meal.description}</td>
-			<td>${u:dtf(meal.dateTime, 'dd.MM.yyyy hh:mm')}</td>
-			<td>${meal.calories}</td>
+		<td>${meal.id}</td>
+		<td>${meal.description}</td>
+		<td>${u:dtf(meal.dateTime, 'dd.MM.yyyy hh:mm')}</td>
+		<td>${meal.calories}</td>
+		<td>
+			<a href="meal-edit.jsp?id=${meal.id}&description=${meal.description}&dateTime=${meal.dateTime}
+			&calories=${meal.calories}">edit</a>
+			<a href="meals?action=delete">delete</a>
+		</td>
 		</tr>
 	</c:forEach>
 	</tbody>
