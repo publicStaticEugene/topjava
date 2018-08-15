@@ -4,13 +4,13 @@ import ru.javawebinar.topjava.model.Meal;
 
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import static ru.javawebinar.topjava.storage.IdCounter.getId;
 
 public class MealStorage {
-    private static final List<Meal> meals = new ArrayList<>();
+    private static final List<Meal> meals = new CopyOnWriteArrayList<>();
 
     static {
         meals.add(new Meal(getId(), LocalDateTime.of(2015, Month.MAY, 30, 10, 0), "Завтрак", 500));

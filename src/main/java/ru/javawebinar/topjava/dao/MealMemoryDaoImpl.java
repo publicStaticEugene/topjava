@@ -6,14 +6,14 @@ import ru.javawebinar.topjava.storage.MealStorage;
 import java.util.Iterator;
 import java.util.List;
 
-public class MealDaoImpl implements IMealDao {
-    private static MealDaoImpl ourInstance = new MealDaoImpl();
+public class MealMemoryDaoImpl implements IMealDao {
+    private static MealMemoryDaoImpl ourInstance = new MealMemoryDaoImpl();
     private final List<Meal> meals = MealStorage.getMeals();
 
-    private MealDaoImpl() {
+    private MealMemoryDaoImpl() {
     }
 
-    public static MealDaoImpl getInstance() {
+    public static MealMemoryDaoImpl getInstance() {
         return ourInstance;
     }
 

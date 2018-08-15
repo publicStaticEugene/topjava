@@ -1,7 +1,7 @@
 package ru.javawebinar.topjava.web;
 
 import ru.javawebinar.topjava.dao.IMealDao;
-import ru.javawebinar.topjava.dao.MealDaoImpl;
+import ru.javawebinar.topjava.dao.MealMemoryDaoImpl;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.storage.IdCounter;
 import ru.javawebinar.topjava.util.MealsUtil;
@@ -17,7 +17,7 @@ public class MealServlet extends HttpServlet {
     protected void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
 
-        final IMealDao mealDao = MealDaoImpl.getInstance();
+        final IMealDao mealDao = MealMemoryDaoImpl.getInstance();
         final String id = request.getParameter("id");
         final String desctiption = request.getParameter("description");
         final LocalDateTime dateTime = LocalDateTime.parse(request.getParameter("dateTime"));
@@ -34,11 +34,13 @@ public class MealServlet extends HttpServlet {
     }
 
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
-        final IMealDao mealDao = MealDaoImpl.getInstance();
+        final IMealDao mealDao = MealMemoryDaoImpl.getInstance();
 
         if ("delete".equals(request.getParameter("action"))) {
             final int id = Integer.valueOf(request.getParameter("id"));
             mealDao.delete(id);
+            response.sendRedirect("meals");
+            return;
         }
 
         request.setAttribute("meals", MealsUtil.getAllFilteredWithExceeded(mealDao.selectAll(), 2000));
