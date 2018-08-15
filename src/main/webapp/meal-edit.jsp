@@ -8,10 +8,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-	<title>Meal edit</title>
+	<title>Meal editor</title>
 </head>
 <body>
 <form action="meals" method="post">
+	<input type="hidden" name="id" value="${param.id}">
 	<table>
 		<thead>Meal edit</thead>
 		<tbody>

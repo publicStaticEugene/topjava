@@ -40,11 +40,12 @@
 		<td>
 			<a href="meal-edit.jsp?id=${meal.id}&description=${meal.description}&dateTime=${meal.dateTime}
 			&calories=${meal.calories}">edit</a>
-			<a href="meals?action=delete">delete</a>
+			<a href="meals?id=${meal.id}&action=delete">delete</a>
 		</td>
 		</tr>
 	</c:forEach>
 	</tbody>
 </table>
+<a href="meal-edit.jsp">new meal</a>
 </body>
 </html>
