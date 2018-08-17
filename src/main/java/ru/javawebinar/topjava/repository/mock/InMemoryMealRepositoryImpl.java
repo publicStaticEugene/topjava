@@ -8,6 +8,7 @@ import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.to.MealWithExceed;
 import ru.javawebinar.topjava.util.MealsUtil;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
@@ -84,10 +85,12 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     }
 
     @Override
-    public List<MealWithExceed> getFiltered(final int userId, int caloriesPerDay, final LocalTime startTime, final LocalTime endTime) {
+    public List<MealWithExceed> getFiltered(final int userId, final int caloriesPerDay,
+                                            final LocalTime startTime, final LocalTime endTime,
+                                            final LocalDate startDate, final LocalDate endDate) {
         log.info("getFiltered {}", userId);
         List<Meal> meals = getAllByUserId(userId);
-        return MealsUtil.getFilteredWithExceeded(meals, caloriesPerDay, startTime, endTime);
+        return MealsUtil.getFilteredWithExceeded(meals, caloriesPerDay, startTime, endTime, startDate, endDate);
     }
 }
 
