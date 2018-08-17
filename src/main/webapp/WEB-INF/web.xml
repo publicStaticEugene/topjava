@@ -26,4 +26,12 @@
         <url-pattern>/meals</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>authServlet</servlet-name>
+        <servlet-class>ru.javawebinar.topjava.web.AuthServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>authServlet</servlet-name>
+        <url-pattern>/auth</url-pattern>
+    </servlet-mapping>
 </web-app>
