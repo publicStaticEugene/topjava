@@ -1,6 +1,7 @@
 package ru.javawebinar.topjava.repository.jdbc;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -48,7 +49,8 @@ public class JdbcMealRepositoryImpl implements MealRepository {
         } else {
             int affectedRows = namedParameterJdbcTemplate.update("" +
                     "UPDATE meals SET date_time=:dateTime, description=:description, calories=:calories " +
-                    "WHERE id=:id", paramMap);
+                    "WHERE id=:id " +
+                    "AND user_id=:userId", paramMap);
             if (affectedRows == 0) {
                 return null;
             }
@@ -60,14 +62,17 @@ public class JdbcMealRepositoryImpl implements MealRepository {
     public boolean delete(final int id, final int userId) {
         return jdbcTemplate.update("" +
                 "DELETE FROM meals " +
-                "WHERE id=" + id) != 0;
+                "WHERE id=? " +
+                "AND user_id=?", id, userId) != 0;
     }
 
     @Override
     public Meal get(final int id, final int userId) {
-        return jdbcTemplate.queryForObject("" +
+        List<Meal> meals = jdbcTemplate.query("" +
                 "SELECT * FROM meals " +
-                "WHERE id=?", rowMapper, id);
+                "WHERE id=? " +
+                "AND user_id=?", rowMapper, id, userId);
+        return DataAccessUtils.singleResult(meals);
     }
 
     @Override
@@ -83,10 +88,11 @@ public class JdbcMealRepositoryImpl implements MealRepository {
                                  final LocalDateTime endDate,
                                  final int userId) {
         return jdbcTemplate.query("" +
-                "SELECT * FROM meals " +
-                "WHERE date_time >= ? " +
-                "AND date_time <= ?" +
-                "ORDER BY date_time DESC", rowMapper,
-                startDate, endDate);
+                        "SELECT * FROM meals " +
+                        "WHERE date_time >= ? " +
+                        "AND date_time <= ? " +
+                        "AND user_id = ? " +
+                        "ORDER BY date_time DESC",
+                rowMapper, startDate, endDate, userId);
     }
 }

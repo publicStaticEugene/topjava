@@ -42,5 +42,8 @@ CREATE TABLE meals
 CREATE UNIQUE INDEX meals_id_uindex
   ON meals (id);
 
+CREATE UNIQUE INDEX meals_user_id_date_time_uindex
+  ON meals (user_id, date_time);
+
 CREATE INDEX meals_user_id_index
   ON meals (user_id);
